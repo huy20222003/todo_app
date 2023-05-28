@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react';
+import TodoContent from './components/TodoApp/TodoContent';
+import Provider from './Context/Provider';
+import EditProvider from './Context/EditProvider.js';
+import ButtonInputProvider from './Context/ButtonInputProvider.js';
+import ButtonSearchProvider from './Context/ButtonSearchProvider.js';
+import Loading from './components/Loading/Loading.js';
+
 
 function App() {
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(()=>{
+    setLoading(false);
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider>
+      <EditProvider>
+        <ButtonInputProvider>
+          <ButtonSearchProvider>
+            <div className = 'app'>
+              {loading ? <Loading /> 
+              : <TodoContent />}
+            </div>
+          </ButtonSearchProvider>
+        </ButtonInputProvider>
+      </EditProvider>
+    </Provider>
   );
 }
 
